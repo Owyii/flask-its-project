@@ -1,0 +1,257 @@
+body {
+  background: rgb(255, 245, 231);
+  color: #333333;
+}
+
+.navbar-expand-lg {
+  height: 10rem;
+  width: 100%;
+  padding-top: 0%;
+  padding-bottom: .5rem; 
+  background: rgb(255, 247, 236);
+  padding-right: 0%;
+  padding-left: 0%;
+}
+
+.container-fluid{
+  height: 90%;
+  min-width: 98%;
+  max-width: 100%;
+  margin-left: 0%;
+  margin-right: 0%;
+  background: #c5d7d7;
+}
+
+/* emoticon lente ingrandimento */
+.lens {
+  margin-top: 3%;
+  filter: grayscale(100%);
+}
+
+/* Layout */
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+}
+
+.bg-steel {
+  background-color: #5f788a;
+}
+
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.article-title {
+  color: #444444;
+}
+
+a.article-title:hover {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.navbar-toggler:focus { box-shadow: none; }
+.navbar-brand {
+  color: #3399CC;
+  font-size: 1.6rem;
+}
+
+.navbar-brand i { font-size: 2rem; }
+
+.tm-hero {
+  max-height: 80%;
+  background: transparent;
+}
+
+.tm-mt-60 { 
+  margin-top: 10px; 
+  width: 100%;
+}
+.tm-mb-50 { margin-bottom: 50px; }
+.tm-mb-74 { margin-bottom: 74px; }
+.tm-mb-90 { margin-bottom: 90px; }
+.tm-text-primary { color: #009999; }
+.tm-text-secondary { color: #CC6699; }
+a.tm-text-primary:hover { color:#666666; }
+.tm-bg-gray { background-color: #EEEEEE; }
+.tm-input-paging {
+  width: 40px;
+  border-radius: 0;
+  border: 1px solid #CCCCCC;
+  background: #f4f4f4;
+  text-align: center;
+}
+
+.nav-item { margin-right: 15px; margin-left: 15px; }
+.nav-item:last-child { margin-right: 30px; }
+
+.nav-link {
+  color: #666666;
+  border-bottom: 4px solid transparent;
+  font-size: 1.2rem;
+}
+
+.nav-link-1.active,
+.nav-link-1:hover {
+  border-color: #33CCFF;
+}
+
+.nav-link-2.active,
+.nav-link-2:hover {
+  border-color: #FF6666;
+}
+
+.nav-link-3.active,
+.nav-link-3:hover {
+  border-color: #33CC66;
+}
+
+.nav-link-4.active,
+.nav-link-4:hover {
+  border-color: #CC66CC;
+}
+
+.tm-search-input {
+  width: 360px;
+  border-radius: 0;
+  padding: 12px 15px;
+  color: #009999;
+  border: none;
+}
+
+.tm-search-input:focus {
+  border-color: #009999;
+  box-shadow: 0 0 0 0.25rem rgb(0 153 153 / 0.25);
+}
+
+.tm-search-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #009999;
+  opacity: 1; /* Firefox */
+}
+
+.tm-search-input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #009999;
+}
+
+.tm-search-btn {
+  color: white;
+  background-color: #009999;
+  border: none;
+  width: 100px;
+  height: 50px;
+  margin-left: -1px;
+}
+
+.main_cont {
+  background-color: rgb(255, 247, 236);
+  padding-left: 2%;
+  padding-right: 2%;
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 0pz;
+}
+
+
+/* Immagini Home */
+figure.effect-ming {
+	background: #030c17;
+}
+
+figure.effect-ming img {
+	opacity: 0.9;
+	-webkit-transition: opacity 0.35s;
+	transition: opacity 0.35s;
+}
+
+figure.effect-ming figcaption::before {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	bottom: 30px;
+	left: 30px;
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 30px rgba(255,255,255,0.2);
+	content: '';
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale3d(1.4,1.4,1);
+	transform: scale3d(1.4,1.4,1);
+}
+
+figure.effect-ming h2 {
+    font-size: 1.3em;
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: scale(1.5);
+	transform: scale(1.5);
+}
+
+figure.effect-ming:hover figcaption::before,
+figure.effect-ming:hover h2 {
+	opacity: 1;
+	-webkit-transform: scale3d(1,1,1);
+	transform: scale3d(1,1,1);
+}
+
+figure.effect-ming:hover figcaption { background-color: rgba(58,52,42,0); }
+figure.effect-ming:hover img { opacity: 0.4; }
+
+.row {
+  margin:0%;  
+}

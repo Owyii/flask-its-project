@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    <title>
+        {% if title %}
+        {{title}}
+        {% else %}
+        My flask blog
+        {% endif %}
+    </title>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-film mr-2"></i>
+                Movie Collector
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-1" aria-current="page" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-2" href="/home">Pagina1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-3" href="/home">Pagina2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="/about">About</a>
+                </li>
+            </ul>
+            </div>
+            <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg">
+                <form class="d-flex tm-search-form">
+                    <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success tm-search-btn" type="submit">
+                        <p class="lens"><span> &#128269; </span></p>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+    
+
+    <div class="row">
+        <div class="main_cont">
+        {% block content %}{% endblock %}
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
