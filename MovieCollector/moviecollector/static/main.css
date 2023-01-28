@@ -3,6 +3,10 @@ body {
   color: #333333;
 }
 
+div {
+  justify-content: center;
+}
+
 .navbar-expand-lg {
   height: 10rem;
   width: 100%;
@@ -209,15 +213,18 @@ a.tm-text-primary:hover { color:#666666; }
 /* Immagini Home */
 figure.effect-ming {
 	background: #030c17;
+  margin: 0;
 }
 
 figure.effect-ming img {
 	opacity: 0.9;
 	-webkit-transition: opacity 0.35s;
 	transition: opacity 0.35s;
+  max-width: 100%;
+  height: auto;
 }
 
-figure.effect-ming figcaption::before {
+/* figure.effect-ming figcaption::before {
 	position: absolute;
 	top: 30px;
 	right: 30px;
@@ -231,10 +238,10 @@ figure.effect-ming figcaption::before {
 	transition: opacity 0.35s, transform 0.35s;
 	-webkit-transform: scale3d(1.4,1.4,1);
 	transform: scale3d(1.4,1.4,1);
-}
+} */
 
 figure.effect-ming h2 {
-    font-size: 1.3em;
+  font-size: 1.3em;
 	opacity: 0;
 	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
 	transition: opacity 0.35s, transform 0.35s;
@@ -254,4 +261,19 @@ figure.effect-ming:hover img { opacity: 0.4; }
 
 .row {
   margin:0%;  
+}
+
+.img-fluid{
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.botton {
+  border: 2px solid black;
+  width: 10vw;
+  text-align: center;
+  color: white;
+  background-color: #5f788a;
 }
