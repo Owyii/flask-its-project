@@ -40,7 +40,7 @@ def GetTabble():
 def RemoveTable(table):
     engine = create_engine(database)
     metadata = MetaData()
-    my_table = Table('film',metadata,autoload_with=engine)
+    my_table = Table(table,metadata,autoload_with=engine)
     my_table.drop(engine)
 
 def create_table():
@@ -58,12 +58,13 @@ def create_table():
         director = Column(String)
         year = Column(Integer)
         description = Column(String)
+        poster = Column(String)
 
     # create the table in the database
     Base.metadata.create_all(engine)
 
 ExecQuery("SELECT * FROM Films")
-#RemoveTable('film')
+#RemoveTable('Films')
 #create_table()
-#GetTabble()
+GetTabble()
 

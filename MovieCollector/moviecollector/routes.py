@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash, request
 from moviecollector import app, db, bcrypt
 from moviecollector.forms import RegistrationForm, LoginForm
-from moviecollector.models import User
+from moviecollector.models import User,Films
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import create_engine, text
 from sqlalchemy import Table, Column, Integer, String, MetaData
@@ -36,7 +36,15 @@ def search_film_information(id):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html", title="Home Page")
+    engine = create_engine(database_url)
+    Session = sessionmaker(bind=engine)
+
+    session = Session()
+    films = session.query(Films).all()
+    session.close()
+    # render a template with the film information
+    return render_template('home.html',title="Home Page", films=films)
+    #return render_template('home.html',title="Home Page")
 
 @app.route("/about")
 def about():
@@ -79,6 +87,7 @@ def select_film():
         director = Column(String)
         year = Column(Integer)
         description = Column(String)
+        poster = Column(String)
     
     # check if the Films table exists in the database
     metadata = MetaData()
@@ -104,7 +113,7 @@ def select_film():
     if('status' not in data.keys()): 
         session = Session()
         # create a new row to add to the table
-        new_film = Films(id=max_id,title=data['name'],director=data['director'][0]['name'],year=data['datePublished'],description=data['description'])
+        new_film = Films(id=max_id,title=data['name'],director=data['director'][0]['name'],year=data['datePublished'],description=data['description'],poster=data['poster'])
         # add the new row to the session
         session.add(new_film)
         session.commit()

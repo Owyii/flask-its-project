@@ -1,6 +1,8 @@
 from datetime import datetime
 from moviecollector import db, login_manager
 from flask_login import UserMixin
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -27,3 +29,15 @@ class Film(db.Model):
 
     def __repr__(self):
         return f"Post('{self.id}', '{self.title}', '{self.author}', '{self.cast}', '{self.plot}')"
+    
+Base = declarative_base()
+class Films(Base):
+    __tablename__ = 'Films'
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    director = Column(String)
+    year = Column(Integer)
+    description = Column(String)
+    poster = Column(String)
+
+
