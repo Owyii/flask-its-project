@@ -74,8 +74,9 @@
                             <span class="tm-text-gray-light">December 14, 2022</span>
                             <span>9,906 views</span>
                         </div>
-                        <button onclick="location.href='{{ url_for('film_page', film='Avatar') }}'" class="botton">View
+                        <button onclick="location.href='{{ url_for('film_page',film=film.id) }}'" class="botton">View
                             More</button>
+                        <a href="{{ url_for('film_detail', id=film.id) }}">View details</a>
                         {% endfor %}
                     </ul>
                     {% endblock %}

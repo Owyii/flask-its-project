@@ -1,7 +1,7 @@
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, abort
 from moviecollector import app, db, bcrypt
 from moviecollector.forms import RegistrationForm, LoginForm
-from moviecollector.models import User,Films
+from moviecollector.models import User,Films,Comment
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import create_engine, text
 from sqlalchemy import Table, Column, Integer, String, MetaData
@@ -13,10 +13,15 @@ from sqlalchemy.orm import sessionmaker
 from PyMovieDb import IMDB
 import json
 
-# some global variable
+# lib needed to create a form to add comment
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+
+# some global variable to get the path of the db
 database_url = r'sqlite:///C:\Users\Emanuele\Documents\GitHub\flask-its-project\MovieCollector\instance\mydb.db'
 
-# function to get movie information
+# function to get movie information from the IMDB Api
 def search_film_title(title):
     imdb = IMDB()
     res = imdb.search(title)
@@ -46,13 +51,63 @@ def home():
     return render_template('home.html',title="Home Page", films=films)
     #return render_template('home.html',title="Home Page")
 
-@app.route("/about")
-def about():
-    return render_template("about.html", title="About Page")
+# @app.route("/about")
+# def about():
+#     return render_template("about.html", title="About Page")
 
 @app.route("/film/<film>")
 def film_page(film):
-    return render_template("about.html", film=film)
+    print(film)
+    return render_template("about.html",film=film)
+
+
+
+# @app.route('/films/<int:id>')
+# def film_detail(id):
+#     engine = create_engine(database_url)
+#     Session = sessionmaker(bind=engine)
+#     # retrieve the film from the database based on its ID
+#     session = Session()
+#     film = session.query(Films).filter_by(id=id).first()
+#     session.close()
+
+#     # render a template with the film information
+#     return render_template('film_detail.html', film=film)
+
+@app.route('/film/<int:id>', methods=['GET', 'POST'])
+def film_detail(id):
+    engine = create_engine(database_url)
+    Session = sessionmaker(bind=engine)
+    # retrieve the film from the database based on its ID
+    session = Session()
+    film = session.query(Films).filter_by(id=id).first()
+    session.close()
+
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = form.comment.data
+        user = form.user.data
+        new_comment = Comment(text=comment,user=user, film_id=id)
+        db.session.add(new_comment)
+        db.session.commit()
+        return redirect(url_for('film_detail', id=id))
+    comments = Comment.query.filter_by(film_id=id).all()
+    return render_template('film_detail.html', film=film, form=form, comments=comments)
+
+# Using the flaks lib i create a form to insert the comment
+class CommentForm(FlaskForm):
+    comment = StringField('Comment', validators=[DataRequired()])
+    user = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+@app.route('/films/<int:id>/comments', methods=['POST'])
+def add_comment(id):
+    film = Films.query.get(id)
+    text = request.form.get('text')
+    comment = Comment(text=text, film=film)
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(url_for('film_detail', id=id))
 
 @app.route('/add', methods=['GET', 'POST'])
 def search_film_title_page():
@@ -79,15 +134,15 @@ def select_film():
     Session = sessionmaker(bind=engine)
     Base = declarative_base()
 
-    # define the Films table
-    class Films(Base):
-        __tablename__ = 'Films'
-        id = Column(Integer, primary_key=True)
-        title = Column(String)
-        director = Column(String)
-        year = Column(Integer)
-        description = Column(String)
-        poster = Column(String)
+    # # define the Films table
+    # class Films(Base):
+    #     __tablename__ = 'Films'
+    #     id = Column(Integer, primary_key=True)
+    #     title = Column(String)
+    #     director = Column(String)
+    #     year = Column(Integer)
+    #     description = Column(String)
+    #     poster = Column(String)
     
     # check if the Films table exists in the database
     metadata = MetaData()

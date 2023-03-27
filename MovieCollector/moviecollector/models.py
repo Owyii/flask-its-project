@@ -30,14 +30,32 @@ class Film(db.Model):
     def __repr__(self):
         return f"Post('{self.id}', '{self.title}', '{self.author}', '{self.cast}', '{self.plot}')"
     
-Base = declarative_base()
-class Films(Base):
+# Base = declarative_base()
+# class Films(Base):
+#     __tablename__ = 'Films'
+#     id = Column(Integer, primary_key=True)
+#     title = Column(String)
+#     director = Column(String)
+#     year = Column(Integer)
+#     description = Column(String)
+#     poster = Column(String)
+
+class Films(db.Model):
     __tablename__ = 'Films'
-    id = Column(Integer, primary_key=True)
-    title = Column(String)
-    director = Column(String)
-    year = Column(Integer)
-    description = Column(String)
-    poster = Column(String)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    director = db.Column(db.String(255), nullable=False)
+    year = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    poster = db.Column(db.Text, nullable=False)
+
+class Comment(db.Model):
+    __tablename__='Comment'
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(500), nullable=False)
+    user = db.Column(db.String(50), nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    film_id = db.Column(db.Integer, db.ForeignKey('Films.id'), nullable=False)
+    film = db.relationship('Films', backref=db.backref('comments', lazy=True))
 
 
