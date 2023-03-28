@@ -8,6 +8,7 @@ from sqlalchemy import Table, Column, Integer, String, MetaData
 from sqlalchemy.sql.expression import func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
 
 # lib to get movie information
 from PyMovieDb import IMDB
@@ -19,7 +20,8 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 # some global variable to get the path of the db
-database_url = r'sqlite:///C:\Users\Emanuele\Documents\GitHub\flask-its-project\MovieCollector\instance\mydb.db'
+file = "MovieCollector/instance/mydb.db"
+database_url = r'sqlite:///'+os.path.abspath(file)
 
 # function to get movie information from the IMDB Api
 def search_film_title(title):
