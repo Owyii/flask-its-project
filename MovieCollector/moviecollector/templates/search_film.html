@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Search Film</title>
-  </head>
-  <body>
-    <h1>Search Film</h1>
-    <form method="post">
-      <label for="title">Enter a film title:</label>
-      <input type="text" id="title" name="title">
-      <br>
-      <input type="submit" value="Search">
-    </form>
-  </body>
-</html>
+{% extends "home.html" %}
+{% block content %}
+
+<h1 style="width: 100%;">Search Film</h1>
+<form method="post">
+  <label for="title" style="display: inline-block">Enter a film title:</label>
+  <input type="text" id="title" name="title">
+  <input type="submit" value="Search" class="botton">
+</form>
+
+{% endblock content %}

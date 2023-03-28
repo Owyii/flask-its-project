@@ -3,6 +3,10 @@ body {
   color: #333333;
 }
 
+* {
+  text-align: center;
+}
+
 div {
   justify-content: center;
 }
@@ -224,22 +228,6 @@ figure.effect-ming img {
   height: auto;
 }
 
-/* figure.effect-ming figcaption::before {
-	position: absolute;
-	top: 30px;
-	right: 30px;
-	bottom: 30px;
-	left: 30px;
-	border: 2px solid #fff;
-	box-shadow: 0 0 0 30px rgba(255,255,255,0.2);
-	content: '';
-	opacity: 0;
-	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
-	transition: opacity 0.35s, transform 0.35s;
-	-webkit-transform: scale3d(1.4,1.4,1);
-	transform: scale3d(1.4,1.4,1);
-} */
-
 figure.effect-ming h2 {
   font-size: 1.3em;
 	opacity: 0;
@@ -276,4 +264,16 @@ figure.effect-ming:hover img { opacity: 0.4; }
   text-align: center;
   color: white;
   background-color: #5f788a;
+}
+
+.comments, .add-comment, .post{
+  width: 100%;
+}
+
+.comment {
+  border-bottom: #030c17 solid 1px;
+}
+
+.film-img {
+  width: 70%;
 }

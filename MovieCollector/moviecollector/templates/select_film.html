@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends "home.html" %}
+{% block content %}
+
   <head>
     <title>Select Film</title>
   </head>
   <body>
-    <h1>Select Film</h1>
+    <h1 style="width: 100%;">Select Film</h1>
     <ul>
       {% for match in matches %}
       <li>{{ match[0] }}</li>
@@ -18,7 +19,7 @@
         {% endfor %}
       </select>
       <br>
-      <input type="submit" value="Save">
+      <input type="submit" value="Select" class="botton">
     </form>
-  </body>
-</html>
+
+{% endblock content %}

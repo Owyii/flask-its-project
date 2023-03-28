@@ -21,7 +21,7 @@ from wtforms.validators import DataRequired
 
 # some global variable to get the path of the db
 file = "MovieCollector/instance/mydb.db"
-database_url = r'sqlite:///'+os.path.abspath(file)
+database_url = r'sqlite:///C:\Users\Utente\Documents\Scola\MachineLearning\Giuri\flask-its-project\MovieCollector\instance\mydb.db'
 
 # function to get movie information from the IMDB Api
 def search_film_title(title):
@@ -103,6 +103,7 @@ class CommentForm(FlaskForm):
     submit = SubmitField('Submit')
 
 @app.route('/films/<int:id>/comments', methods=['POST'])
+@login_required
 def add_comment(id):
     film = Films.query.get(id)
     text = request.form.get('text')
@@ -170,7 +171,17 @@ def select_film():
     if('status' not in data.keys()): 
         session = Session()
         # create a new row to add to the table
-        new_film = Films(id=max_id,title=data['name'],director=data['director'][0]['name'],year=data['datePublished'],description=data['description'],poster=data['poster'])
+        plot = "Non Disponibile" if data['description'] == None else data['description']
+        genere = ", ".join(data["genre"])
+        new_film = Films(id=max_id,
+                         title=data['name'],
+                         director=data['director'][0]['name'],
+                         year=data['datePublished'],
+                         description=plot,
+                         poster=data['poster'],
+                         rating=data['rating']['ratingValue'],
+                         duration=data['duration'],
+                         genere=genere)
         # add the new row to the session
         session.add(new_film)
         session.commit()

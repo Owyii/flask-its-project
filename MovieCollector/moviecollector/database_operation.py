@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from PyMovieDb import IMDB
 import json
 
-database = r'sqlite:///C:\Users\Emanuele\Documents\GitHub\flask-its-project\MovieCollector\instance\mydb.db'
+database = r'sqlite:///C:\Users\Utente\Documents\Scola\MachineLearning\Giuri\flask-its-project\MovieCollector\instance\mydb.db'
 
 def ExecQuery(query):
     # create a SQLAlchemy engine to connect to the database file
@@ -63,8 +63,8 @@ def create_table():
     # create the table in the database
     Base.metadata.create_all(engine)
 
-ExecQuery("SELECT * FROM Films")
-#RemoveTable('Films')
+# ExecQuery("SELECT * FROM Films")
+RemoveTable('Films')
 #create_table()
 GetTabble()
 

@@ -48,6 +48,9 @@ class Films(db.Model):
     year = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     poster = db.Column(db.Text, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    genere = db.Column(db.Text, nullable=False)
+    duration = db.Column(db.String(50))
 
 class Comment(db.Model):
     __tablename__='Comment'

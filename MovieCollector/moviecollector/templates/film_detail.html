@@ -1,9 +1,40 @@
+{% extends "home.html" %}
+{% block content %}
 <!-- Add this to your film_detail.html template -->
 
 <!-- Display film image and plot -->
-<div class="film-details">
-    <img src="{{ film.poster }}" alt="{{ film.title }}" class="film-img">
+<div class="film-details" style="width: 100%">
+    <div style="float: left; width: 50%; height: 100%;">
+        <img src="{{ film.poster }}" alt="{{ film.title }}" class="film-img">
+    </div>
+    <div style="float: right; width: 50%; margin-top: 10px;">
+        <p style="font-size: 20px; text-align: left;"><b>Titolo:</b> {{ film.title }}</p><br>
+        <p style="font-size: 20px; text-align: left;"><b>Regista:</b> {{ film.director }}</p><br>
+        <p style="font-size: 20px; text-align: left;"><b>Anno produzione:</b> {{ film.year }}</p><br>
+        <p style="font-size: 20px; text-align: left;"><b>Durata:</b> {{ film.duration }}</p><br>
+        <p style="font-size: 20px; text-align: left;"><b>Generi:</b> {{ film.genere }}</p><br>
+        <p style="font-size: 20px; text-align: left;"><b>Voto:</b> {{ film.rating }}</p><br>
+    </div>
+</div>
+<div style="width: 100%; margin-top: 10px;">
     <p>{{ film.description }}</p>
+</div>
+
+<!-- Form for adding new comment -->
+<div class="add-comment">
+    <h3>Add Comment:</h3>
+    <form method="post">
+        {{ form.csrf_token }}
+        <div style="display: inline-block;">
+            {{ form.comment.label }} {{ form.comment }}
+        </div>
+        <div style="display: inline-block; margin-left: 10px;" >
+            {{ form.user.label }} {{ form.user }}
+        </div>
+        <div style="display: inline-block; margin-left: 30px;">
+            {{ form.submit }}
+        </div>
+    </form>
 </div>
 
 <!-- Display comments for the film -->
@@ -12,29 +43,12 @@
     {% if comments %}
         {% for comment in comments %}
             <div class="comment">
-                <p>{{ comment.text }}</p>
-                <p>Posted by {{ comment.user }} on {{ comment.timestamp.strftime('%b %d, %Y at %I:%M %p') }}</p>
+                <p style="display: inline-block; font-size: 30px;">{{ comment.text }}</p>
+                <p style="display: inline-block; margin-left: 10px;">Posted by {{ comment.user }} on {{ comment.timestamp.strftime('%b %d, %Y at %I:%M %p') }}</p>
             </div>
         {% endfor %}
     {% else %}
         <p>No comments yet.</p>
     {% endif %}
 </div>
-
-<!-- Form for adding new comment -->
-<div class="add-comment">
-    <h3>Add Comment:</h3>
-    <form method="post">
-        {{ form.csrf_token }}
-        <div class="form-group">
-            {{ form.comment.label }} {{ form.comment }}
-        </div>
-        <div class="form-group">
-            {{ form.user.label }} {{ form.user }}
-        </div>
-        <div class="form-group">
-            {{ form.submit }}
-        </div>
-    </form>
-</div>
-
+{% endblock content %}
