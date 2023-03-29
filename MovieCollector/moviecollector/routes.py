@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, flash, request, abort
 from moviecollector import app, db, bcrypt
-from moviecollector.forms import RegistrationForm, LoginForm
+from moviecollector.forms import RegistrationForm, LoginForm, UpdateUserForm
 from moviecollector.models import User,Films,Comment
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import create_engine, text
@@ -21,7 +21,7 @@ from wtforms.validators import DataRequired
 
 # some global variable to get the path of the db
 file = "MovieCollector/instance/mydb.db"
-database_url = r'sqlite:///C:\Users\Utente\Documents\Scola\MachineLearning\Giuri\flask-its-project\MovieCollector\instance\mydb.db'
+database_url = r'sqlite:///C:\Users\Utente\Documents\GitHub\flask-its-project\MovieCollector\instance\mydb.db'
 
 # function to get movie information from the IMDB Api
 def search_film_title(title):
@@ -232,3 +232,74 @@ def logout():
     logout_user()
     flash(f'Logged Out', category='info')
     return redirect('/home')
+
+@app.route("/user_account")
+@login_required
+def user_account():
+    # crea l'url per l'immagine del profilo dell'utente
+    image_file = url_for(
+        'static', filename=f"images/{current_user.image_file}")
+
+    # restituisce la pagina user_account.html passando il titolo della pagina, l'url dell'immagine
+    # del profilo dell'utente
+    return render_template("user_account.html", title=f"{current_user.username} page",
+                           image_file=image_file)
+
+@app.route("/user_account/edit", methods=['POST', 'GET'])
+@login_required
+def edit_user_account():
+    # Percorso del file immagine dell'utente
+    image_file = url_for('static', filename=f"images/{current_user.image_file}")
+
+    # Creazione del form per l'aggiornamento dei dati dell'utente
+    form = UpdateUserForm()
+
+    if form.validate_on_submit():
+        # Aggiornamento del file immagine dell'utente se presente
+        if form.image_file.data:
+            new_file_name = save_image_file(form.image_file.data)
+            current_user.image_file = new_file_name
+
+        # Aggiornamento del nome utente se diverso dal precedente
+        if current_user.username != form.username.data:
+            current_user.username = form.username.data
+
+        # Aggiornamento dell'email utente se diversa da quella precedente
+        if current_user.email != form.email.data:
+            current_user.email = form.email.data
+
+        # Salvataggio dei dati aggiornati nel database
+        db.session.commit()
+
+        # Messaggio di conferma per l'utente
+        flash(f"I tuoi dati sono stati aggiornati {form.username.data}", category="success")
+        return redirect(url_for('user_account'))
+    else:
+        # Se il form non è stato validato, riempire i campi del form con i dati dell'utente
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+
+    # Mostra la pagina di modifica dati utente
+    return render_template("edit_user_account.html", title=f"{current_user.username} - Pagina di aggiornamento dati",
+                           image_file=image_file, form=form)
+
+
+def save_image_file(image_file_data):
+    # Estrae l'estensione del file immagine
+    _, file_ext = os.path.splitext(image_file_data.filename)
+
+    # Crea un nuovo nome univoco per il file immagine
+    new_name = secrets.token_hex(8)
+    new_file_name = new_name + file_ext
+
+    # Percorso del file immagine nel server
+    file_path = os.path.join(os.getcwd(), "myflaskblog", "static", "images", new_file_name)
+
+    # Salva il file immagine nel server
+    image_file_data.save(file_path)
+
+    # TODO: rimuovere il vecchio file immagine (os)
+    # TODO: ridurre le dimensioni del file immagine caricato (pillow)
+
+    # Ritorna il nuovo nome del file immagine
+    return new_file_name
