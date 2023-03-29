@@ -63,8 +63,8 @@ def create_table():
     # create the table in the database
     Base.metadata.create_all(engine)
 
-# ExecQuery("SELECT * FROM Films")
-RemoveTable('Films')
+ExecQuery("SELECT * FROM Films")
+# RemoveTable('Films')
 #create_table()
 GetTabble()
 

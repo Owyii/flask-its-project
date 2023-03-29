@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, flash, request, abort
+from flask import render_template, url_for, redirect, flash, request, abort, session
 from moviecollector import app, db, bcrypt
 from moviecollector.forms import RegistrationForm, LoginForm, UpdateUserForm
 from moviecollector.models import User,Films,Comment
@@ -9,6 +9,7 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
+import secrets
 
 # lib to get movie information
 from PyMovieDb import IMDB
@@ -21,7 +22,7 @@ from wtforms.validators import DataRequired
 
 # some global variable to get the path of the db
 file = "MovieCollector/instance/mydb.db"
-database_url = r'sqlite:///C:\Users\Utente\Documents\GitHub\flask-its-project\MovieCollector\instance\mydb.db'
+database_url = r'sqlite:///C:\Users\Utente\Documents\Scola\MachineLearning\Giuri\flask-its-project\MovieCollector\instance\mydb.db'
 
 # function to get movie information from the IMDB Api
 def search_film_title(title):
@@ -171,16 +172,21 @@ def select_film():
     if('status' not in data.keys()): 
         session = Session()
         # create a new row to add to the table
-        plot = "Non Disponibile" if data['description'] == None else data['description']
+        title_tp = "Non Disponibile" if data['name'] == None else data['name']
+        director_tp = "Non Disponibile" if data['director'][0]["name"] == None else data['director'][0]["name"]
+        year_tp = "Non Disponibile" if data['datePublished'] == None else data['datePublished']
+        description_tp = "" if data['description'] == None else data['description']
+        rating_tp = "Non Disponibile" if data['rating']['ratingValue'] == None else data['rating']['ratingValue']
+        duration_tp = "Non Disponibile" if data['duration'] == None else f"{data['duration'][2]} ore {data['duration'][4:6]} minuti"
         genere = ", ".join(data["genre"])
         new_film = Films(id=max_id,
-                         title=data['name'],
-                         director=data['director'][0]['name'],
-                         year=data['datePublished'],
-                         description=plot,
+                         title=title_tp,
+                         director=director_tp,
+                         year=year_tp,
+                         description=description_tp,
                          poster=data['poster'],
-                         rating=data['rating']['ratingValue'],
-                         duration=data['duration'],
+                         rating=rating_tp,
+                         duration=duration_tp,
                          genere=genere)
         # add the new row to the session
         session.add(new_film)
@@ -293,7 +299,7 @@ def save_image_file(image_file_data):
     new_file_name = new_name + file_ext
 
     # Percorso del file immagine nel server
-    file_path = os.path.join(os.getcwd(), "myflaskblog", "static", "images", new_file_name)
+    file_path = os.path.join(os.getcwd(), "moviecollector", "static", "images", new_file_name)
 
     # Salva il file immagine nel server
     image_file_data.save(file_path)

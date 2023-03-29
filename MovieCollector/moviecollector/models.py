@@ -43,14 +43,14 @@ class Film(db.Model):
 class Films(db.Model):
     __tablename__ = 'Films'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
-    director = db.Column(db.String(255), nullable=False)
-    year = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.Text, nullable=False)
+    title = db.Column(db.String(255), nullable=True)
+    director = db.Column(db.String(255), nullable=True)
+    year = db.Column(db.String(255), nullable=True)
+    description = db.Column(db.Text, nullable=True)
     poster = db.Column(db.Text, nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
-    genere = db.Column(db.Text, nullable=False)
-    duration = db.Column(db.String(50))
+    rating = db.Column(db.Integer, nullable=True)
+    genere = db.Column(db.Text, nullable=True)
+    duration = db.Column(db.String(50), nullable=True)
 
 class Comment(db.Model):
     __tablename__='Comment'
